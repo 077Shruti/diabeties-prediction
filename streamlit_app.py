@@ -1,49 +1,50 @@
+# importing Important Liberaries
 import pickle
 import streamlit as st
 import numpy as np
 
+# Load model
+model_diabetes = pickle.load(open('model_diabetes_logistic.sav', 'rb'))
 
-model_logistic = pickle.load(open('model_diabetes_logistic.sav', 'rb'))
-model_random_forest = pickle.load(open('model_diabetes_random_forest.sav', 'rb'))
-model_gaussian = pickle.load(open('model_diabetes_gaussian.sav', 'rb'))
+# Web Title
+st.title('Diabetes Prediction')
 
-st.markdown("<h1 style='text-align: center; color: black;'>Diabetes Prediction</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='color: black;'>Please Enter the Required Information:</h3>", unsafe_allow_html=True)
+# Split Columns
+col1, col2 = st.columns(2)
 
+with col1 :
+  Pregnancies = st.number_input('Enter the Pregnancies value')
 
-col1 = st.container()
-with col1:
-    model_choice = st.selectbox('Select the Model', ['Logistic Regression', 'Random Forest', 'Gaussian'])
+with col2 :
+  Glucose = st.number_input('Enter the Glucose value')
+  
+with col1 :
+  BloodPressure = st.number_input('Enter the Blood Pressure value')
 
-    
-    Pregnancies = st.number_input('Enter the Pregnancies value', key='Pregnancies')
-    Glucose = st.number_input('Enter the Glucose value', key='Glucose')
-    BloodPressure = st.number_input('Enter the Blood Pressure value', key='BloodPressure')
-    SkinThickness = st.number_input('Enter the Skin Thickness value', key='SkinThickness')
-    Insulin = st.number_input('Enter the Insulin value', key='Insulin')
-    BMI = st.number_input('Enter the BMI value', key='BMI')
-    DiabetesPedigreeFunction = st.number_input('Enter the Diabetes Pedigree Function value', key='DiabetesPedigreeFunction')
-    Age = st.number_input('Enter the Age value', key='Age')
+with col2 :
+  SkinThickness = st.number_input('Enter the Skin Thickness value')
 
+with col1 :
+  Insulin = st.number_input('Enter the Insulin value')
 
+with col2 :
+  BMI = st.number_input('Enter the BMI value')
+
+with col1 :
+  DiabetesPedigreeFunction = st.number_input('Enter the Diabetes Pedigree Function value')
+
+with col2 :
+  Age = st.number_input('Enter the Age value')
+  
+# Prediction
 diabetes_diagnosis = ''
 
-if st.button('Diabetes Prediction Test', key='predict'):
-   
-    if model_choice == 'Logistic Regression':
-        model = model_logistic
-    elif model_choice == 'Random Forest':
-        model = model_random_forest
-    else:
-        model = model_gaussian
+if st.button('Diabetes Prediction Test'):
+  diabetes_prediction = model_diabetes.predict([[Pregnancies,Glucose,BloodPressure,SkinThickness,Insulin,BMI,DiabetesPedigreeFunction,Age]])
+  
+  if(diabetes_prediction[0]==1):
+    diabetes_diagnosis = 'The patient has diabetes'
+  else :
+    diabetes_diagnosis = 'The patient does not have diabetes'
 
-    
-    diabetes_prediction = model.predict([[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
-    
-    
-    if diabetes_prediction[0] == 1:
-        diabetes_diagnosis = "<p style='color: black; font-size: 20px;'>The patient has diabetes</p>"
-    else:
-        diabetes_diagnosis = "<p style='color: black; font-size: 20px;'>The patient does not have diabetes</p>"
-
-st.markdown(diabetes_diagnosis, unsafe_allow_html=True)
+st.success(diabetes_diagnosis)
