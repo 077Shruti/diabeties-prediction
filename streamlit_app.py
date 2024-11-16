@@ -1,7 +1,27 @@
 import pickle
 import streamlit as st
 import numpy as np
+import streamlit as st  
+import pickle  
+import os  
 
+# Check if scikit-learn is installed  
+try:  
+    import sklearn  
+except ImportError:  
+    st.error("scikit-learn is not installed. Please install it to run this app.")  
+
+# Load models  
+try:  
+    model_logistic = pickle.load(open('model_diabetes_logistic.sav', 'rb'))  
+    model_random_forest = pickle.load(open('model_diabetes_random_forest.sav', 'rb'))  
+    model_gaussian = pickle.load(open('model_diabetes_gaussian.sav', 'rb'))  
+except FileNotFoundError as e:  
+    st.error(f"Model file not found: {e}")  
+except Exception as e:  
+    st.error(f"An error occurred while loading the models: {e}")  
+
+# Continue with your Streamlit app logic...
 
 model_logistic = pickle.load(open('model_diabetes_logistic.sav', 'rb'))
 model_random_forest = pickle.load(open('model_diabetes_random_forest.sav', 'rb'))
