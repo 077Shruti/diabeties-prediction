@@ -1,7 +1,7 @@
 import pickle
 import streamlit as st
 import numpy as np
-import sklearn
+# import sklearn
 
 model_logistic = pickle.load(open('model_diabetes_logistic.sav', 'rb'))
 model_random_forest = pickle.load(open('model_diabetes_random_forest.sav', 'rb'))
