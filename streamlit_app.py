@@ -1,7 +1,7 @@
 import pickle
 import streamlit as st
 import numpy as np
-# import sklearn
+
 
 model_logistic = pickle.load(open('model_diabetes_logistic.sav', 'rb'))
 model_random_forest = pickle.load(open('model_diabetes_random_forest.sav', 'rb'))
@@ -42,8 +42,8 @@ if st.button('Diabetes Prediction Test', key='predict'):
     
     
     if diabetes_prediction[0] == 1:
-        diabetes_diagnosis = "<p style='color: red; font-size: 20px;'>The patient has diabetes</p>"
+        diabetes_diagnosis = "<p style='color: black; font-size: 20px;'>The patient has diabetes</p>"
     else:
-        diabetes_diagnosis = "<p style='color: green; font-size: 20px;'>The patient does not have diabetes</p>"
+        diabetes_diagnosis = "<p style='color: black; font-size: 20px;'>The patient does not have diabetes</p>"
 
 st.markdown(diabetes_diagnosis, unsafe_allow_html=True)
