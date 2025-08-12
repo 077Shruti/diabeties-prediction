@@ -1,1 +1,1 @@
-Deployed web app:- https://diabeties-prediction-btxmtt4jenvbzjca4wtu57.streamlit.app/
+Deployed web app:- https://077shruti-diabeties-prediction-streamlit-app-5pirwn.streamlit.app/
